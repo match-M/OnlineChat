@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/Offline.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.match.controller.ControllerOffline">
+   <children>
+      <Label layoutX="199.0" layoutY="355.0" prefHeight="15.0" prefWidth="244.0" text="初始化服务失败！当前处于服务初始化工程页" />
+      <Label layoutX="124.0" layoutY="61.0" prefHeight="39.0" prefWidth="189.0" text="设置新的默认服务器">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="126.0" layoutY="158.0" prefHeight="22.0" prefWidth="69.0" text="IP地址：">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="hostPort" layoutX="195.0" layoutY="119.0" />
+      <Label layoutX="126.0" layoutY="119.0" text="端口：">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="ipAddress" layoutX="195.0" layoutY="158.0" />
+      <Button fx:id="localTest" layoutX="124.0" layoutY="247.0" mnemonicParsing="false" onAction="#btn_localTestEvent" prefHeight="8.0" prefWidth="101.0" text="本地回环测试" />
+      <Label layoutX="124.0" layoutY="212.0" prefHeight="27.0" prefWidth="173.0" text="网络基础连接测试">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="intranetTest" layoutX="246.0" layoutY="245.0" mnemonicParsing="false" onAction="#btn_intranetTestEvent" prefHeight="27.0" prefWidth="107.0" text=" 内网联通性测试" />
+      <Button fx:id="outerNetTest" layoutX="370.0" layoutY="247.0" mnemonicParsing="false" onAction="#btn_outerNetTestEvent" text="外网联通性测试" />
+      <Button fx:id="exit" layoutX="555.0" layoutY="362.0" mnemonicParsing="false" onAction="#btn_exitEvent" prefHeight="15.0" prefWidth="31.0">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ico/exit.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="finish" disable="true" layoutX="299.0" layoutY="187.0" mnemonicParsing="false" onAction="#btn_finishEvent" prefHeight="27.0" prefWidth="58.0" text="完成" />
+      <Button fx:id="connectionTesting" layoutX="193.0" layoutY="189.0" mnemonicParsing="false" onAction="#btn_connectionTestingEvent" text="连接测试" />
+      <Label layoutX="124.0" layoutY="272.0" text="默认配置文件检测与修复">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="configFileCheck" layoutX="124.0" layoutY="309.0" mnemonicParsing="false" onAction="#btn_configFileCheck" prefHeight="23.0" prefWidth="100.0" text="配置文件检测" />
+      <Button fx:id="configFileRepair" layoutX="257.0" layoutY="309.0" mnemonicParsing="false" onAction="#btn_configFileRepairEvent" text="文件修复" />
+      <Label fx:id="networkTest_local_result" layoutX="226.0" layoutY="251.0" prefHeight="15.0" prefWidth="17.0" />
+      <Label fx:id="networkTest_intranet_result" layoutX="356.0" layoutY="251.0" prefHeight="15.0" prefWidth="17.0" />
+      <Label fx:id="networkTest_outerNet_result" layoutX="475.0" layoutY="251.0" prefHeight="15.0" prefWidth="17.0" />
+      <Label fx:id="file_repair_result" layoutX="328.0" layoutY="313.0" prefHeight="15.0" prefWidth="17.0" />
+      <Label fx:id="file_check_result" layoutX="226.0" layoutY="313.0" prefHeight="15.0" prefWidth="17.0" />
+      <Label fx:id="connectionTesting_result" layoutX="257.0" layoutY="193.0" prefHeight="15.0" prefWidth="17.0" />
+      <Label fx:id="portExceptionPrompt" layoutX="366.0" layoutY="123.0" />
+      <Label fx:id="initExceptionPrompt" layoutX="107.0" layoutY="355.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,6 @@
+.list-view{
+    -fx-background-insets: 0;
+}
+.list-cell{
+    -fx-background-color: transparent;
+}
