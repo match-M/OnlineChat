@@ -1,0 +1,6 @@
+.label{
+    -fx-alignment: center;
+    -fx-font-size: 10px;
+    -fx-min-width: 9px;
+    -fx-effect: dropshadow(three-pass-box, #a9acad, 10.0,0, 0, 0);
+}
