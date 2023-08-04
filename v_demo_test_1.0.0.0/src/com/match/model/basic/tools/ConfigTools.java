@@ -6,6 +6,9 @@ import java.util.*;
 import com.match.model.basic.constants.DefaultConfigName;
 import com.match.model.basic.constants.DefaultConfigValues;
 import com.match.model.basic.constants.DefaultConfigFileName;
+import com.match.model.basic.constants.InitErrorInfoConst;
+import com.match.model.basic.exception.ConfigFileNotFoundException;
+import com.match.model.basic.exception.ConfigNameNotFoundException;
 
 public class ConfigTools {
 
@@ -141,19 +144,20 @@ public class ConfigTools {
     private HashMap<String, String> getConfig(String configFileName) throws IOException {
         Properties prop = new Properties();
         HashMap<String, String> config = new HashMap<>();
-        try {
-            if (configFileName == null)
-                configFileName = this.configFileName;
-            FileReader fileReader = new FileReader("./config/" + configFileName + ".properties");
-            prop.load(fileReader);
-            Set<String> keySet = prop.stringPropertyNames();
-            for (String key : keySet) {
-                config.put(key, prop.getProperty(key));
-            }
-            fileReader.close();
+        if (configFileName == null)
+            configFileName = this.configFileName;
+        FileReader fileReader = new FileReader("./config/" + configFileName + ".properties");
+        prop.load(fileReader);
+        Set<String> keySet = prop.stringPropertyNames();
+        for (String key : keySet) {
+            config.put(key, prop.getProperty(key));
+        }
+        fileReader.close();
+       /* try {
+
         }catch (IOException e){
             e.printStackTrace();
-        }
+        }*/
         return config;
     }
 
@@ -193,6 +197,7 @@ public class ConfigTools {
                 code.put(key, statCode);
                 results.put(configFileName, code);
             } catch (IOException e) {
+                System.out.println("-1");
                 statCode = -1;
                 key = configFileName+"Code";
                 code.put(key, statCode);
@@ -218,7 +223,7 @@ public class ConfigTools {
     }
 
     public boolean repair(){
-        HashMap<String, HashMap<String, Integer>> checkRes = getConfigFileResult();
+        HashMap<String, HashMap<String, Integer>> checkRes = getConfigFileCheckResult();
         int statCode;
         String key;
         boolean flag = false;
@@ -243,7 +248,23 @@ public class ConfigTools {
         return flag;
     }
 
-    public HashMap<String, HashMap<String, Integer>> getConfigFileResult(){
+    /**
+     * 配置文件自检，一般在初始化时会使用
+     */
+    public void selfCheck() throws ConfigFileNotFoundException, ConfigNameNotFoundException {
+        HashMap<String, HashMap<String, Integer>> checkRes = getConfigFileCheckResult();
+        int statCode;
+        String key;
+        for (String configFileName : DefaultConfigFileName.CONFIG_NAME_LIST) {
+            HashMap<String, Integer> statCodes = checkRes.get(configFileName);
+            key = configFileName + "Code";
+            statCode = statCodes.get(key);
+            if (statCode == -1) throw new ConfigFileNotFoundException(InitErrorInfoConst.INIT_CONFIG_FILE_ERROR);
+            if(statCode == 0) throw new ConfigNameNotFoundException(InitErrorInfoConst.INIT_CONFIG_ERROR);
+        }
+    }
+
+    public HashMap<String, HashMap<String, Integer>> getConfigFileCheckResult(){
         return check();
     }
 

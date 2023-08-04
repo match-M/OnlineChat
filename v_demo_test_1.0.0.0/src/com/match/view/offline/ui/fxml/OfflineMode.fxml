@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/Offline.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.match.controller.ControllerOffline">
    <children>
-      <Label layoutX="199.0" layoutY="355.0" prefHeight="15.0" prefWidth="244.0" text="初始化服务失败！当前处于服务初始化工程页" />
+      <Label layoutX="215.0" layoutY="355.0" prefHeight="15.0" prefWidth="244.0" text="初始化服务失败！当前处于服务初始化工程页" />
       <Label layoutX="124.0" layoutY="61.0" prefHeight="39.0" prefWidth="189.0" text="设置新的默认服务器">
          <font>
             <Font size="20.0" />

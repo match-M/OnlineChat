@@ -7,6 +7,7 @@ import com.match.model.basic.constants.UserOperationError;
 import com.match.model.basic.tools.GeneratingTools;
 import com.match.view.chat.ChatView;
 import com.match.view.dialog.PromptDialog;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -46,21 +47,24 @@ public class ControllerHall implements Initializable {
 
         roomList.setItems(chatRoomList);
         roomList.setEditable(false);
-        roomList.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                try {
-                    if(HallView.user.getName() == null) {
-                        new ErrorDialog(UserOperationError.UNREGISTERED);
-                        return;
-                    }
-                    String roomName = String.valueOf(roomList.getFocusModel().getFocusedItem());
-                    selectRoom(roomName);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        roomList.getSelectionModel().selectedItemProperty().addListener(
+                (ObservableValue<? extends String> observable, String oldValue, String newValue) ->{
+                    roomList.setOnMouseClicked(event -> {
+                        if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                            try {
+                                if(HallView.user.getName() == null) {
+                                    new ErrorDialog(UserOperationError.UNREGISTERED);
+                                    return;
+                                }
+                                String roomName = String.valueOf(roomList.getFocusModel().getFocusedItem());
+                                selectRoom(roomName);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
-
-            }
-        });
+        );
     }
 
 

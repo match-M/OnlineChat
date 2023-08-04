@@ -3,7 +3,9 @@ package com.match.view.hall;
 import com.match.model.basic.constants.ClientConst;
 import com.match.model.basic.constants.InitErrorInfoConst;
 import com.match.model.basic.config.ConfigList;
+import com.match.model.basic.exception.ConfigFileNotFoundException;
 import com.match.model.basic.exception.ConfigNameNotFoundException;
+import com.match.model.basic.tools.ConfigTools;
 import com.match.view.dialog.ServerChooseDialog;
 import com.match.model.basic.chat.message.ResultMessageHandling;
 import com.match.model.basic.client.Client;
@@ -19,8 +21,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.Objects;
@@ -29,9 +29,9 @@ import java.util.Timer;
 
 public class HallView extends Application {
 
-    public static Timer timer;
     public static Hall hall;
     public static User user;
+    public static Timer timer;
     public static Client client;
     public static Stage hallWindows;
     public static String initErrorInfo;
@@ -48,6 +48,7 @@ public class HallView extends Application {
 
     public static void initOnlineChat(){
         try {
+            new ConfigTools().selfCheck(); //配置文件自检
             configList = new ConfigList("server");
             client = new Client(configList.getConfig(ClientConst.IP),
                     Integer.parseInt(configList.getConfig(ClientConst.PORT)));
@@ -69,9 +70,9 @@ public class HallView extends Application {
                 initErrorInfo = InitErrorInfoConst.INIT_NETWORK_ERROR;
                 e2.printStackTrace();
             }
-        }catch (ConfigNameNotFoundException configError){
+        }catch (ConfigNameNotFoundException | ConfigFileNotFoundException configError){
             initError = true;
-            initErrorInfo = InitErrorInfoConst.INIT_CONFIG_ERROR;
+            initErrorInfo = configError.getMessage();
         }
     }
     public static void main(String[] args) {

@@ -30,7 +30,6 @@ public class ControllerChat implements Initializable{
     public Button exit;
     public Button send;
     public TextArea inText;
-    private int cursorPosition;
 
     public User user = HallView.user;
     public Label errorPrompt = new Label();
@@ -51,7 +50,6 @@ public class ControllerChat implements Initializable{
         chatBox.setEditable(false);
         chatBox.getStylesheets().add("com/match/view/chat/ui/css/ChatBox.css");
 
-        cursorPosition = inText.getCaretPosition();
         inText.setWrapText(true);
         inText.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.ENTER){

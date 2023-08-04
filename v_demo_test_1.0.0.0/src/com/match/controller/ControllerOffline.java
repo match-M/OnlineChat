@@ -123,7 +123,7 @@ public class ControllerOffline implements Initializable {
     public void btn_configFileCheck(){
         boolean statException = false;
         int statCode;
-        HashMap<String, HashMap<String, Integer>> checkRes = configTools.getConfigFileResult();
+        HashMap<String, HashMap<String, Integer>> checkRes = configTools.getConfigFileCheckResult();
         HashMap<String ,Integer> code;
         for(String key : DefaultConfigFileName.CONFIG_NAME_LIST){
             code = checkRes.get(key);
