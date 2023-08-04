@@ -59,7 +59,7 @@ public class ControllerChat implements Initializable{
                     lineFeed(); //换行
                 else {
                     sendBtnEvent();
-                    inText.deleteText(0, inText.getText().indexOf("\n"));
+                    inText.deleteText(0, inText.getText().indexOf(" "));
                     /*这是删除多余的换行符，不过这里会报错，但不用管*/
                 }
             }
@@ -101,11 +101,12 @@ public class ControllerChat implements Initializable{
         String sendMsg = inText.getText();
         if(sendMsg == null || sendMsg.length() == 0 || sendMsg.trim().equals("")){
             errorPrompt.setText("发送内容不能为空！");
+            inText.clear();
+            //防止出现按了一堆换行的情况
             return;
         }
         errorPrompt.setText("");
         inText.clear();
-
         sendMessageHanding.message(sendMsg);
         Label userInfo_id = new Label( "id:"+user.getId());
         Label userInfo_name = new Label(user.getName());

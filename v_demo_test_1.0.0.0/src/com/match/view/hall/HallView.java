@@ -121,6 +121,11 @@ public class HallView extends Application {
             primaryStage.setOnShowing(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     getChatRoomListTime(controllerHall);
                 }
             });
