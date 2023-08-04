@@ -78,7 +78,7 @@ public class ControllerOffline implements Initializable {
 
     public void btn_intranetTestEvent() {
         try {
-            configList.upConfigList(); //更新内容
+            configList.upConfigList(); //更新配置内容
             String value = configList.getConfig(DefaultConfigName.VIEW_INTRANET_TEST_PROMPT);
             int result = Integer.parseInt(value);
             String[] keys = new String[]{DefaultConfigName.VIEW_INTRANET_TEST_PROMPT};

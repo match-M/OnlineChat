@@ -10,6 +10,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.net.SocketException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import com.match.model.basic.chat.ClientHandler;
 import io.netty.handler.codec.string.StringDecoder;
@@ -44,8 +46,11 @@ public class Client {
                              protected void initChannel(NioSocketChannel ch)
                                      throws Exception {
                                  ChannelPipeline pipeline = ch.pipeline();
-                                 pipeline.addLast("encoder", new StringEncoder());
-                                 pipeline.addLast("decoder", new StringDecoder());
+                                 pipeline.addLast(new StringDecoder(Charset.forName("GBK")));
+                                 pipeline.addLast(new StringEncoder(StandardCharsets.UTF_8));
+
+                             /*    pipeline.addLast("encoder", new StringEncoder());
+                                 pipeline.addLast("decoder", new StringDecoder());*/
                                  pipeline.addLast(new ClientHandler());
                              }
                          });

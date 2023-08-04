@@ -1,6 +1,6 @@
 .label{
-    -fx-background-radius: 10px;
-    -fx-alignment: center;
+    -fx-background-radius: 5px;
+    -fx-alignment: top-center;
     -fx-font-size: 15px;
     -fx-min-width: 25px;
     -fx-min-height: 27px;

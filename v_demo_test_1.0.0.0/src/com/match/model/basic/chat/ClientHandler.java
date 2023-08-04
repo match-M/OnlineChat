@@ -3,7 +3,11 @@ package com.match.model.basic.chat;
 import com.match.controller.ControllerChat;
 import com.match.model.basic.chat.message.SystemMessageHanding;
 import com.match.model.basic.chat.message.ResultMessageHandling;
+import com.match.model.basic.constants.SignUpError;
+import com.match.model.basic.constants.UserOperationError;
 import com.match.model.basic.hall.Hall;
+import com.match.view.dialog.ErrorDialog;
+import com.match.view.dialog.PromptDialog;
 import com.match.view.hall.HallView;
 import com.match.model.basic.tools.ParsingTools;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,6 +16,8 @@ import javafx.application.Platform;
 
 public class ClientHandler extends SimpleChannelInboundHandler<String> {
     private final ControllerChat CONTROLLERCHAT = new ControllerChat();
+    public static boolean register = false;
+    public static boolean newRoomError = false;
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, String msg) throws Exception {
 
@@ -27,6 +33,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
             case "register" :{
                 int id = (int) parsingTools.get("id");
                 HallView.user.setId(id);
+                register = true;
                 break;
             }
             case "SystemMessage" :{
@@ -42,7 +49,12 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
                 break;
 
             }
-            case "newRoom" : Hall.ResMsg_newRoom = parsingTools.getString("result"); break;
+            case "newRoom" : {
+                String result = parsingTools.getString("result");
+                if(result.equals("房间已存在！"))
+                    newRoomError = true;
+                break;
+            }
         }
     }
 

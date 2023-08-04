@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
+import jdk.Exported;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,9 +26,11 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ControllerChat implements Initializable{
+
     public Button exit;
     public Button send;
     public TextArea inText;
+    private int cursorPosition;
 
     public User user = HallView.user;
     public Label errorPrompt = new Label();
@@ -41,35 +44,27 @@ public class ControllerChat implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        chatBox.setItems(message);
-        chatBox.getStylesheets().add("com/match/view/chat/ui/css/ChatBox.css");
-        chatBox.setCellFactory(new Callback<ListView<HBox>, ListCell<HBox>>() {
-            public ListCell<HBox> call(ListView<HBox> param) {
-                // TODO Auto-generated method stub
-                return new ListCell<HBox>() {
-                    @Override
-                    //只定义编辑单元格一定要重写的方法
-                    protected void updateItem(HBox item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!empty) {
-                            this.setGraphic(item);
-                        }
+        Tooltip.install(send, new Tooltip(UiPrompt.SEND_BUTTON));
+        Tooltip.install(exit, new Tooltip(UiPrompt.ROOM_EXIT_BUTTON));
 
-                    }
-                };
-            }
-        });
+        chatBox.setItems(message);
+        chatBox.setEditable(false);
+        chatBox.getStylesheets().add("com/match/view/chat/ui/css/ChatBox.css");
+
+        cursorPosition = inText.getCaretPosition();
         inText.setWrapText(true);
         inText.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.ENTER){
                 if(e.isControlDown())
                     lineFeed(); //换行
-                else
+                else {
                     sendBtnEvent();
+                    inText.deleteText(0, inText.getText().indexOf("\n"));
+                    /*这是删除多余的换行符，不过这里会报错，但不用管*/
+                }
             }
+
         });
-        Tooltip.install(send, new Tooltip(UiPrompt.SEND_BUTTON));
-        Tooltip.install(exit, new Tooltip(UiPrompt.ROOM_EXIT_BUTTON));
     }
 
     public void otherMessage(){
@@ -110,6 +105,7 @@ public class ControllerChat implements Initializable{
         }
         errorPrompt.setText("");
         inText.clear();
+
         sendMessageHanding.message(sendMsg);
         Label userInfo_id = new Label( "id:"+user.getId());
         Label userInfo_name = new Label(user.getName());
@@ -151,11 +147,12 @@ public class ControllerChat implements Initializable{
     }
 
     public void viewNewMessage(){
-        chatBox.scrollTo(message.size()+3);
+        chatBox.scrollTo(message.size());
     }
 
     public void lineFeed(){
         int caretPosition = inText.getCaretPosition();
+
         // 获得输入文本，此文本不包含刚刚输入的换行符
         String text = inText.getText();
         // 获得光标两边的文本

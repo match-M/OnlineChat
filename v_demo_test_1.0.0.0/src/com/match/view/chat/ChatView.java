@@ -40,6 +40,4 @@ public class ChatView {
         CONTROLLERCHAT.sendMessageHanding.setRoomName(roomName);
     }
 
-
-
 }

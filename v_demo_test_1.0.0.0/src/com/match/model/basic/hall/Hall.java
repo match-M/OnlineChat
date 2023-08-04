@@ -13,7 +13,6 @@ import static com.alibaba.fastjson.JSON.toJSONString;
 public class Hall {
     private Client client;
     private GeneratingTools generatingTools = new GeneratingTools();
-    public static String ResMsg_newRoom = " ";
     public static String msg = " ";
     public static int roomNum;
     public User user;
@@ -36,17 +35,11 @@ public class Hall {
         }
     }
 
-    public boolean newRoom(String name){
+    public void newRoom(String name){
         try{
-            boolean newRoomHavaState = false;
             generatingTools.json("mode", "newRoom");
             generatingTools.json("NewRoomName", name);
             client.send(toJSONString(generatingTools.getJson()));
-            if(ResMsg_newRoom.equals("房间已存在！")){
-                newRoomHavaState = true;
-                ResMsg_newRoom = " ";
-            }
-            return newRoomHavaState;
         }catch (Exception e) {
             throw new RuntimeException(e);
         }

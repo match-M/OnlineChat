@@ -29,7 +29,7 @@ import java.util.Timer;
 
 public class HallView extends Application {
 
-
+    public static Timer timer;
     public static Hall hall;
     public static User user;
     public static Client client;
@@ -103,24 +103,28 @@ public class HallView extends Application {
             primaryStage.setResizable(false);//设置不能窗口改变大小
             primaryStage.setTitle("在线聊天");//设置标题
             primaryStage.show();
+            getChatRoomListTime(controllerHall);
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
                     controllerHall.exitEvent();
                 }
             });
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                public void run() {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            controllerHall.viewRoomList();
-                        }
-
-                    });
+            //隐藏则暂停获取
+            primaryStage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    HallView.timer.cancel();
                 }
-            }, 0, 2000);
+            });
+            //窗口显示就继续获取
+            primaryStage.setOnShowing(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    getChatRoomListTime(controllerHall);
+                }
+            });
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -149,6 +153,22 @@ public class HallView extends Application {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void getChatRoomListTime(ControllerHall controllerHall){
+        Timer timer = new Timer();
+        HallView.timer = timer;
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        controllerHall.viewRoomList();
+                    }
+
+                });
+            }
+        }, 0, 2000);
     }
 
 }
