@@ -264,14 +264,26 @@ public class ConfigTools {
         }
     }
 
+    /**
+     * 获取配置文件内的配置信息
+     * @return 返回配置文件的检查结果
+     */
     public HashMap<String, HashMap<String, Integer>> getConfigFileCheckResult(){
         return check();
     }
 
+    /**
+     * 获取配置文件，文件名是this.configFileName
+     * @return 返回包含配置名称和配置内容的hashmap，key-配置名称，value-配置内容
+     */
     public HashMap<String, String> getConfigReader() throws IOException {
         return this.getConfig(null);
     }
 
+    /**
+     * 获取配置文件内的配置信息
+     * @return 返回包含配置名称和配置内容的hashmap，key-配置名称，value-配置内容
+     */
     public HashMap<String, String> getConfigReader(String configFileName) throws IOException  {
         return this.getConfig(configFileName);
     }

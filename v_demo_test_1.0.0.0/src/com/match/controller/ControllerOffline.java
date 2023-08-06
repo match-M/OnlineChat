@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class ControllerOffline implements Initializable {
 
-    public Button help;
+    public boolean configError = false;
     public Button exit;
     public Button finish;
     public TextField hostPort;
@@ -78,7 +78,7 @@ public class ControllerOffline implements Initializable {
 
     public void btn_intranetTestEvent() {
         try {
-            configList.upConfigList(); //更新配置内容
+            configList = new ConfigList(); //防止出现配置文件丢失修复后配置依然无法找到
             String value = configList.getConfig(DefaultConfigName.VIEW_INTRANET_TEST_PROMPT);
             int result = Integer.parseInt(value);
             String[] keys = new String[]{DefaultConfigName.VIEW_INTRANET_TEST_PROMPT};
@@ -91,22 +91,23 @@ public class ControllerOffline implements Initializable {
                 configTools = new ConfigTools(DefaultConfigFileName.USER_SETTING_CONFIG);
                 configTools.upConfig(keys, results);
             }
-        }catch (ConfigNameNotFoundException e){
-            new ErrorDialog(e.getMessage());
-        }
-        int intranetStat = netWorkTools.intranetTest();
-        switch (intranetStat){
-            case -1:{
-                viewResult(networkTest_intranet_result, Color.ORANGE, "×");
-                break;
-            }
-            case 0:{
-                viewResult(networkTest_intranet_result, Color.RED, "×");
-                break;
-            }
-            case 1:{
-                viewResult(networkTest_intranet_result, Color.GREEN, "✔");
-                break;
+        }catch (ConfigNameNotFoundException | NullPointerException e){
+            e.printStackTrace();
+        }finally {
+            int intranetStat = netWorkTools.intranetTest();
+            switch (intranetStat) {
+                case -1: {
+                    viewResult(networkTest_intranet_result, Color.ORANGE, "×");
+                    break;
+                }
+                case 0: {
+                    viewResult(networkTest_intranet_result, Color.RED, "×");
+                    break;
+                }
+                case 1: {
+                    viewResult(networkTest_intranet_result, Color.GREEN, "✔");
+                    break;
+                }
             }
         }
     }
