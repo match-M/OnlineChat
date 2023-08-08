@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 
 public class ControllerOffline implements Initializable {
 
-    public boolean configError = false;
     public Button exit;
     public Button finish;
     public TextField hostPort;

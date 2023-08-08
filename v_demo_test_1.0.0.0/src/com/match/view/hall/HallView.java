@@ -56,7 +56,7 @@ public class HallView extends Application {
             initBasicService();
         }catch (InterruptedException | SocketException e) {
             if(e instanceof  InterruptedException)
-              return;
+                return;
             try {
                 ServerChooseDialog serverChooseDialog = new ServerChooseDialog(
                         "服务器连接错误",

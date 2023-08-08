@@ -108,7 +108,14 @@ public class ControllerHall implements Initializable {
             return;
         }
         RegisterDialog registerDialog = new RegisterDialog(client);
-        if(ClientHandler.register&&HallView.user.getId() == 10000){
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(!ClientHandler.register || HallView.user.getId() == 10000){
+            System.out.println(ClientHandler.register);
+            System.out.println(HallView.user.getId());
             new PromptDialog("注册错误", SignUpError.SIGN_UP_FAIL);
             HallView.user.setName(null);
             return;

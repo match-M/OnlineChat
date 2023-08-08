@@ -46,15 +46,20 @@ public class Client {
                              protected void initChannel(NioSocketChannel ch)
                                      throws Exception {
                                  ChannelPipeline pipeline = ch.pipeline();
-                                 pipeline.addLast(new StringDecoder(Charset.forName("GBK")));
-                                 pipeline.addLast(new StringEncoder(StandardCharsets.UTF_8));
+                                 pipeline.addLast(new StringDecoder(Charset.forName("GBK"))); //编码
+                                 pipeline.addLast(new StringEncoder(StandardCharsets.UTF_8)); //解码
 
                              /*    pipeline.addLast("encoder", new StringEncoder());
                                  pipeline.addLast("decoder", new StringDecoder());*/
                                  pipeline.addLast(new ClientHandler());
                              }
                          });
-        channelFuture = b.connect(ip, port).sync();//异步建立连接
+        try {
+            channelFuture = b.connect(ip, port).sync();//异步建立连接
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
     }
 
     public void send(String sendMsg) throws Exception{
