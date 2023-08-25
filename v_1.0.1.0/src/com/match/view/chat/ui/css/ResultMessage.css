@@ -1,0 +1,9 @@
+.label{
+    -fx-background-radius: 5px;
+    -fx-alignment: top-center;
+    -fx-font-size: 15px;
+    -fx-min-width: 25px;
+    -fx-min-height: 27px;
+    -fx-background-color: #0169ff;
+    -fx-effect: dropshadow(three-pass-box, #a9acad, 10.0,0, 0, 0);
+}

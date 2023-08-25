@@ -1,0 +1,43 @@
+.root {
+    -fx-background-color: white;
+}
+
+.list-view{
+    -fx-background-insets: 0;
+}
+
+.list-cell:empty{
+    -fx-background-color: transparent;
+}
+
+.list-cell{
+    -fx-font-family: Arial;
+    -fx-pref-height: 80px;
+    -fx-background-radius: 15px;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, #9fb0ba, 10.0,0, 0, 0);
+    -fx-cursor: hand;
+}
+
+.list-cell:hover{
+    -fx-effect: dropshadow(three-pass-box, #72b9da, 10.0,0, 0, 0);
+    -fx-cursor: hand;
+}
+
+.list-cell:selected {
+    -fx-background-color: #9fb0ba;
+}
+
+.button{
+    -fx-pref-height: 50px;
+    -fx-background-color: white;
+}
+
+.button:hover{
+    /*粗体*/
+    -fx-font-weight: bold;
+    /*透明度*/
+    -fx-opacity: 0.8;
+    -fx-effect: dropshadow(three-pass-box, #72b9da, 0, 0, 0, 0);
+    -fx-cursor: hand;
+}

@@ -1,0 +1,19 @@
+.root {
+    -fx-background-color: white;
+}
+
+
+.button{
+    -fx-pref-height: 50px;
+    -fx-background-color: white;
+}
+
+.button:hover{
+    /*粗体*/
+    -fx-font-weight: bold;
+
+    /*透明度*/
+    -fx-opacity: 0.8;
+    -fx-effect: dropshadow(three-pass-box, #72b9da, 10.0,0, 0, 0);
+    -fx-cursor: hand;
+}
